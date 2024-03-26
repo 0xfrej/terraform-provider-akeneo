@@ -26,18 +26,13 @@ func NewAttributeClient(client *goakeneo.Client) *AttributeService {
 	}
 }
 
-func (a *AttributeService) CreateAttribute(attribute goakeneo.Attribute) (*goakeneo.Attribute, error) {
-	response := new(goakeneo.Attribute)
-	err := a.client.POST(
+func (a *AttributeService) CreateAttribute(attribute goakeneo.Attribute) error {
+	return a.client.POST(
 		attributePath,
 		nil,
 		attribute,
-		response,
+		nil,
 	)
-	if err != nil {
-		return nil, err
-	}
-	return response, nil
 }
 
 func (a *AttributeService) UpdateAttribute(attribute goakeneo.Attribute) (*goakeneo.Attribute, error) {
@@ -54,18 +49,13 @@ func (a *AttributeService) UpdateAttribute(attribute goakeneo.Attribute) (*goake
 	return response, nil
 }
 
-func (a *AttributeService) CreateAttributeOption(option goakeneo.AttributeOption) (*goakeneo.AttributeOption, error) {
-	response := new(goakeneo.AttributeOption)
-	err := a.client.POST(
+func (a *AttributeService) CreateAttributeOption(option goakeneo.AttributeOption) error {
+	return a.client.POST(
 		fmt.Sprintf(attributeOptionPath, option.Attribute),
 		nil,
 		option,
-		response,
+		nil,
 	)
-	if err != nil {
-		return nil, err
-	}
-	return response, nil
 }
 
 func (a *AttributeService) UpdateAttributeOption(option goakeneo.AttributeOption) (*goakeneo.AttributeOption, error) {
@@ -110,18 +100,13 @@ func (a *AttributeService) GetAttributeGroup(code string) (*AttributeGroup, erro
 	return response, nil
 }
 
-func (a *AttributeService) CreateAttributeGroup(group AttributeGroup) (*AttributeGroup, error) {
-	response := new(AttributeGroup)
-	err := a.client.POST(
+func (a *AttributeService) CreateAttributeGroup(group AttributeGroup) error {
+	return a.client.POST(
 		attributeGroupPath,
 		nil,
 		group,
-		response,
+		nil,
 	)
-	if err != nil {
-		return nil, err
-	}
-	return response, nil
 }
 
 func (a *AttributeService) UpdateAttributeGroup(group AttributeGroup) (*AttributeGroup, error) {

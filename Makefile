@@ -83,7 +83,7 @@ build: clean
 	@echo "Built terraform-provider-akeneo"
 
 acctest: build
-	TF_ACC=1 go test ./internal $(TESTARGS)
+	TF_ACC=1 go test ./... $(TESTARGS)
 
 install: build
 	cp bin/terraform-provider-akeneo $$GOPATH/bin/terraform-provider-akeneo

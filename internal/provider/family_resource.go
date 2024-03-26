@@ -239,7 +239,7 @@ func (r *FamilyResource) mapToApiObject(ctx context.Context, diags *diag.Diagnos
 		Code: data.Code.ValueString(),
 	}
 
-	if !data.Labels.IsNull() {
+	if !(data.Labels.IsNull() || data.Labels.IsUnknown()) {
 		elements := make(map[string]types.String, len(data.Labels.Elements()))
 		diags.Append(data.Labels.ElementsAs(ctx, &elements, false)...)
 		labels := make(map[string]string)
@@ -249,7 +249,7 @@ func (r *FamilyResource) mapToApiObject(ctx context.Context, diags *diag.Diagnos
 		a.Labels = labels
 	}
 
-	if !data.Attributes.IsNull() {
+	if !(data.Attributes.IsNull() || data.Attributes.IsUnknown()) {
 		elements := make([]types.String, 0, len(data.Attributes.Elements()))
 		diags.Append(data.Attributes.ElementsAs(ctx, &elements, false)...)
 		attrs := make([]string, len(elements))
@@ -259,15 +259,15 @@ func (r *FamilyResource) mapToApiObject(ctx context.Context, diags *diag.Diagnos
 		a.Attributes = attrs
 	}
 
-	if !data.AttributeAsLabel.IsNull() {
+	if !(data.AttributeAsLabel.IsNull() || data.AttributeAsLabel.IsUnknown()) {
 		a.AttributeAsLabel = data.AttributeAsLabel.ValueString()
 	}
 
-	if !data.AttributeAsImage.IsNull() {
+	if !(data.AttributeAsImage.IsNull() || data.AttributeAsImage.IsUnknown()) {
 		a.AttributeAsImage = data.AttributeAsImage.ValueString()
 	}
 
-	if !data.AttributeRequirements.IsNull() {
+	if !(data.AttributeRequirements.IsNull() || data.AttributeRequirements.IsUnknown()) {
 		elements := make(map[string]types.List, len(data.AttributeRequirements.Elements()))
 		diags.Append(data.AttributeRequirements.ElementsAs(ctx, &elements, false)...)
 		reqs := make(map[string][]string)

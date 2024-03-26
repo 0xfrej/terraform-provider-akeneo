@@ -261,7 +261,7 @@ func (r *AttributeResource) Create(ctx context.Context, req resource.CreateReque
 		return
 	}
 
-	_, err := r.client.CreateAttribute(*apiData)
+	err := r.client.CreateAttribute(*apiData)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error while creating an attribute",
@@ -374,89 +374,109 @@ func (r *AttributeResource) mapToApiObject(ctx context.Context, diags *diag.Diag
 		Group: data.Group.ValueString(),
 	}
 
-	if !data.SortOrder.IsNull() {
-		a.SortOrder = int(data.SortOrder.ValueInt64())
+	if !(data.SortOrder.IsNull() || data.SortOrder.IsUnknown()) {
+		v := int(data.SortOrder.ValueInt64())
+		a.SortOrder = &v
 	}
 
-	if !data.Localizable.IsNull() {
-		a.Localizable = data.Localizable.ValueBool()
+	if !(data.Localizable.IsNull() || data.Localizable.IsUnknown()) {
+		v := data.Localizable.ValueBool()
+		a.Localizable = &v
 	}
 
-	if !data.Scopable.IsNull() {
-		a.Scopable = data.Scopable.ValueBool()
+	if !(data.Scopable.IsNull() || data.Scopable.IsUnknown()) {
+		v := data.Scopable.ValueBool()
+		a.Scopable = &v
 	}
 
-	if !data.Unique.IsNull() {
-		a.Unique = data.Unique.ValueBool()
+	if !(data.Unique.IsNull() || data.Unique.IsUnknown()) {
+		v := data.Unique.ValueBool()
+		a.Unique = &v
 	}
 
-	if !data.UseableAsGridFilter.IsNull() {
-		a.UseableAsGridFilter = data.UseableAsGridFilter.ValueBool()
+	if !(data.UseableAsGridFilter.IsNull() || data.UseableAsGridFilter.IsUnknown()) {
+		v := data.UseableAsGridFilter.ValueBool()
+		a.UseableAsGridFilter = &v
 	}
 
-	if !data.MaxCharacters.IsNull() {
-		a.MaxCharacters = int(data.MaxCharacters.ValueInt64())
+	if !(data.MaxCharacters.IsNull() || data.MaxCharacters.IsUnknown()) {
+		v := int(data.MaxCharacters.ValueInt64())
+		a.MaxCharacters = &v
 	}
 
-	if !data.ValidationRule.IsNull() {
-		a.ValidationRule = data.ValidationRule.ValueString()
+	if !(data.ValidationRule.IsNull() || data.ValidationRule.IsUnknown()) {
+		v := data.ValidationRule.ValueString()
+		a.ValidationRule = &v
 	}
 
-	if !data.ValidationRegexp.IsNull() {
-		a.ValidationRegexp = data.ValidationRegexp.ValueString()
+	if !(data.ValidationRegexp.IsNull() || data.ValidationRegexp.IsUnknown()) {
+		v := data.ValidationRegexp.ValueString()
+		a.ValidationRegexp = &v
 	}
 
-	if !data.WysiwygEnabled.IsNull() {
-		a.WysiwygEnabled = data.WysiwygEnabled.ValueBool()
+	if !(data.WysiwygEnabled.IsNull() || data.WysiwygEnabled.IsUnknown()) {
+		v := data.WysiwygEnabled.ValueBool()
+		a.WysiwygEnabled = &v
 	}
 
-	if !data.NumberMin.IsNull() {
+	if !(data.NumberMin.IsNull() || data.NumberMin.IsUnknown()) {
 		v, _ := data.NumberMin.ValueBigFloat().Float64()
-		a.NumberMin = strconv.FormatFloat(v, 'f', -1, 64)
+		r := strconv.FormatFloat(v, 'f', -1, 64)
+		a.NumberMin = &r
 	}
 
-	if !data.NumberMax.IsNull() {
-		v, _ := data.NumberMin.ValueBigFloat().Float64()
-		a.NumberMin = strconv.FormatFloat(v, 'f', -1, 64)
+	if !(data.NumberMax.IsNull() || data.NumberMax.IsUnknown()) {
+		v, _ := data.NumberMax.ValueBigFloat().Float64()
+		r := strconv.FormatFloat(v, 'f', -1, 64)
+		a.NumberMax = &r
 	}
 
-	if !data.DecimalsAllowed.IsNull() {
-		a.DecimalsAllowed = data.DecimalsAllowed.ValueBool()
+	if !(data.DecimalsAllowed.IsNull() || data.DecimalsAllowed.IsUnknown()) {
+		v := data.DecimalsAllowed.ValueBool()
+		a.DecimalsAllowed = &v
 	}
 
-	if !data.NegativeAllowed.IsNull() {
-		a.NegativeAllowed = data.NegativeAllowed.ValueBool()
+	if !(data.NegativeAllowed.IsNull() || data.NegativeAllowed.IsUnknown()) {
+		v := data.NegativeAllowed.ValueBool()
+		a.NegativeAllowed = &v
 	}
 
-	if !data.MetricFamily.IsNull() {
-		a.MetricFamily = data.MetricFamily.ValueString()
+	if !(data.MetricFamily.IsNull() || data.MetricFamily.IsUnknown()) {
+		v := data.MetricFamily.ValueString()
+		a.MetricFamily = &v
 	}
 
-	if !data.DefaultMetricUnit.IsNull() {
-		a.DefaultMetricUnit = data.DefaultMetricUnit.ValueString()
+	if !(data.DefaultMetricUnit.IsNull() || data.DefaultMetricUnit.IsUnknown()) {
+		v := data.DefaultMetricUnit.ValueString()
+		a.DefaultMetricUnit = &v
 	}
 
-	if !data.DateMin.IsNull() {
-		a.DateMin = data.DateMin.ValueString()
+	if !(data.DateMin.IsNull() || data.DateMin.IsUnknown()) {
+		v := data.DateMin.ValueString()
+		a.DateMin = &v
 	}
 
-	if !data.DateMax.IsNull() {
-		a.DateMax = data.DateMax.ValueString()
+	if !(data.DateMax.IsNull() || data.DateMax.IsUnknown()) {
+		v := data.DateMax.ValueString()
+		a.DateMax = &v
 	}
 
-	if !data.MaxFileSize.IsNull() {
-		a.MaxFileSize = strconv.Itoa(int(data.MaxFileSize.ValueInt64()))
+	if !(data.MaxFileSize.IsNull() || data.MaxFileSize.IsUnknown()) {
+		v := strconv.Itoa(int(data.MaxFileSize.ValueInt64()))
+		a.MaxFileSize = &v
 	}
 
-	if !data.ReferenceDataName.IsNull() {
-		a.ReferenceDataName = data.ReferenceDataName.ValueString()
+	if !(data.ReferenceDataName.IsNull() || data.ReferenceDataName.IsUnknown()) {
+		v := data.ReferenceDataName.ValueString()
+		a.ReferenceDataName = &v
 	}
 
-	if !data.DefaultValue.IsNull() {
-		a.DefaultValue = data.DefaultValue.ValueBool()
+	if !(data.DefaultValue.IsNull() || data.DefaultValue.IsUnknown()) {
+		v := data.DefaultValue.ValueBool()
+		a.DefaultValue = &v
 	}
 
-	if !data.Labels.IsNull() {
+	if !(data.Labels.IsNull() || data.Labels.IsUnknown()) {
 		elements := make(map[string]types.String, len(data.Labels.Elements()))
 		diags.Append(data.Labels.ElementsAs(ctx, &elements, false)...)
 		labels := make(map[string]string)
@@ -466,7 +486,7 @@ func (r *AttributeResource) mapToApiObject(ctx context.Context, diags *diag.Diag
 		a.Labels = labels
 	}
 
-	if !data.GroupLabels.IsNull() {
+	if !(data.GroupLabels.IsNull() || data.GroupLabels.IsUnknown()) {
 		elements := make(map[string]types.String, len(data.GroupLabels.Elements()))
 		diags.Append(data.GroupLabels.ElementsAs(ctx, &elements, false)...)
 		labels := make(map[string]string)
@@ -476,7 +496,7 @@ func (r *AttributeResource) mapToApiObject(ctx context.Context, diags *diag.Diag
 		a.GroupLabels = labels
 	}
 
-	if !data.AvailableLocales.IsNull() {
+	if !(data.AvailableLocales.IsNull() || data.AvailableLocales.IsUnknown()) {
 		elements := make([]types.String, 0, len(data.AvailableLocales.Elements()))
 		diags.Append(data.AvailableLocales.ElementsAs(ctx, &elements, false)...)
 		locales := make([]string, len(elements))
@@ -486,7 +506,7 @@ func (r *AttributeResource) mapToApiObject(ctx context.Context, diags *diag.Diag
 		a.AvailableLocales = locales
 	}
 
-	if !data.AllowedExtensions.IsNull() {
+	if !(data.AllowedExtensions.IsNull() || data.AllowedExtensions.IsUnknown()) {
 		elements := make([]types.String, 0, len(data.AllowedExtensions.Elements()))
 		diags.Append(data.AllowedExtensions.ElementsAs(ctx, &elements, false)...)
 		exts := make([]string, len(elements))
@@ -496,7 +516,7 @@ func (r *AttributeResource) mapToApiObject(ctx context.Context, diags *diag.Diag
 		a.AllowedExtensions = exts
 	}
 
-	if !data.TableConfiguration.IsNull() {
+	if !(data.TableConfiguration.IsNull() || data.TableConfiguration.IsUnknown()) {
 		elements := make([]types.String, 0, len(data.TableConfiguration.Elements()))
 		diags.Append(data.TableConfiguration.ElementsAs(ctx, &elements, false)...)
 		cfg := make([]string, len(elements))
@@ -514,7 +534,6 @@ func (r *AttributeResource) mapToApiObject(ctx context.Context, diags *diag.Diag
 }
 
 func (r *AttributeResource) mapToTfObject(respDiags *diag.Diagnostics, data *AttributeResourceModel, attrData *goakeneo.Attribute) {
-	// todo map only non empties
 	data.Code = types.StringValue(attrData.Code)
 	data.Type = types.StringValue(attrData.Type)
 	data.Group = types.StringValue(attrData.Group)
@@ -546,9 +565,15 @@ func (r *AttributeResource) mapToTfObject(respDiags *diag.Diagnostics, data *Att
 		}
 		data.GroupLabels = mapVal
 	}
-	data.SortOrder = types.Int64Value(int64(attrData.SortOrder))
-	data.Localizable = types.BoolValue(attrData.Localizable)
-	data.Scopable = types.BoolValue(attrData.Scopable)
+	if attrData.SortOrder != nil {
+		data.SortOrder = types.Int64Value(int64(*attrData.SortOrder))
+	}
+	if attrData.Localizable != nil {
+		data.Localizable = types.BoolValue(*attrData.Localizable)
+	}
+	if attrData.Scopable != nil {
+		data.Scopable = types.BoolValue(*attrData.Scopable)
+	}
 	if len(attrData.AvailableLocales) > 0 {
 		elements := make([]attr.Value, len(attrData.AvailableLocales))
 
@@ -562,35 +587,59 @@ func (r *AttributeResource) mapToTfObject(respDiags *diag.Diagnostics, data *Att
 		}
 		data.AvailableLocales = listVal
 	}
-	data.Unique = types.BoolValue(attrData.Unique)
-	data.UseableAsGridFilter = types.BoolValue(attrData.UseableAsGridFilter)
-	data.MaxCharacters = types.Int64Value(int64(attrData.MaxCharacters))
-	data.ValidationRule = types.StringValue(attrData.ValidationRule)
-	data.ValidationRegexp = types.StringValue(attrData.ValidationRegexp)
-	data.WysiwygEnabled = types.BoolValue(attrData.WysiwygEnabled)
-	if attrData.NumberMin != "" {
-		v, err := strconv.ParseFloat(attrData.NumberMin, 64)
+	if attrData.Unique != nil {
+		data.Unique = types.BoolValue(*attrData.Unique)
+	}
+	if attrData.UseableAsGridFilter != nil {
+		data.UseableAsGridFilter = types.BoolValue(*attrData.UseableAsGridFilter)
+	}
+	if attrData.MaxCharacters != nil {
+		data.MaxCharacters = types.Int64Value(int64(*attrData.MaxCharacters))
+	}
+	if attrData.ValidationRule != nil {
+		data.ValidationRule = types.StringValue(*attrData.ValidationRule)
+	}
+	if attrData.ValidationRegexp != nil {
+		data.ValidationRegexp = types.StringValue(*attrData.ValidationRegexp)
+	}
+	if attrData.WysiwygEnabled != nil {
+		data.WysiwygEnabled = types.BoolValue(*attrData.WysiwygEnabled)
+	}
+	if attrData.NumberMin != nil {
+		v, err := strconv.ParseFloat(*attrData.NumberMin, 64)
 		if err != nil {
 			respDiags.AddError("Error parsing float value", "Error parsing float value. \n\n"+"Error: "+err.Error())
 			return
 		}
 		data.NumberMin = types.NumberValue(big.NewFloat(v))
 	}
-	if attrData.NumberMax != "" {
-		v, err := strconv.ParseFloat(attrData.NumberMax, 64)
+	if attrData.NumberMax != nil {
+		v, err := strconv.ParseFloat(*attrData.NumberMax, 64)
 		if err != nil {
 			respDiags.AddError("Error parsing float value", "Error parsing float value. \n\n"+"Error: "+err.Error())
 			return
 		}
 		data.NumberMax = types.NumberValue(big.NewFloat(v))
 	}
-	data.DecimalsAllowed = types.BoolValue(attrData.DecimalsAllowed)
-	data.NegativeAllowed = types.BoolValue(attrData.NegativeAllowed)
-	data.MetricFamily = types.StringValue(attrData.MetricFamily)
-	data.DefaultMetricUnit = types.StringValue(attrData.DefaultMetricUnit)
-	data.DateMin = types.StringValue(attrData.DateMin)
-	data.DateMax = types.StringValue(attrData.DateMax)
-	if len(attrData.AvailableLocales) > 0 {
+	if attrData.DecimalsAllowed != nil {
+		data.DecimalsAllowed = types.BoolValue(*attrData.DecimalsAllowed)
+	}
+	if attrData.NegativeAllowed != nil {
+		data.NegativeAllowed = types.BoolValue(*attrData.NegativeAllowed)
+	}
+	if attrData.MetricFamily != nil {
+		data.MetricFamily = types.StringValue(*attrData.MetricFamily)
+	}
+	if attrData.DefaultMetricUnit != nil {
+		data.DefaultMetricUnit = types.StringValue(*attrData.DefaultMetricUnit)
+	}
+	if attrData.DateMin != nil {
+		data.DateMin = types.StringValue(*attrData.DateMin)
+	}
+	if attrData.DateMax != nil {
+		data.DateMax = types.StringValue(*attrData.DateMax)
+	}
+	if attrData.AvailableLocales != nil {
 		elements := make([]attr.Value, len(attrData.AllowedExtensions))
 
 		for k, v := range attrData.AllowedExtensions {
@@ -603,16 +652,20 @@ func (r *AttributeResource) mapToTfObject(respDiags *diag.Diagnostics, data *Att
 		}
 		data.AllowedExtensions = listVal
 	}
-	if attrData.MaxFileSize != "" {
-		v, err := strconv.ParseInt(attrData.MaxFileSize, 10, 64)
+	if attrData.MaxFileSize != nil {
+		v, err := strconv.ParseInt(*attrData.MaxFileSize, 10, 64)
 		if err != nil {
 			respDiags.AddError("Error parsing float value", "Error parsing float value. \n\n"+"Error: "+err.Error())
 		}
 		data.MaxCharacters = types.Int64Value(v)
 	}
-	data.ReferenceDataName = types.StringValue(attrData.ReferenceDataName)
-	data.DefaultValue = types.BoolValue(attrData.DefaultValue)
-	if len(attrData.TableConfiguration) > 0 {
+	if attrData.ReferenceDataName != nil {
+		data.ReferenceDataName = types.StringValue(*attrData.ReferenceDataName)
+	}
+	if attrData.DefaultValue != nil {
+		data.DefaultValue = types.BoolValue(*attrData.DefaultValue)
+	}
+	if attrData.TableConfiguration != nil {
 		elements := make([]attr.Value, len(attrData.TableConfiguration))
 
 		for k, v := range attrData.TableConfiguration {

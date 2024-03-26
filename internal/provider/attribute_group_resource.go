@@ -112,7 +112,7 @@ func (r *AttributeGroupResource) Create(ctx context.Context, req resource.Create
 		return
 	}
 
-	_, err := r.client.CreateAttributeGroup(*apiData)
+	err := r.client.CreateAttributeGroup(*apiData)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error while creating an attribute group",
@@ -223,11 +223,11 @@ func (r *AttributeGroupResource) mapToApiObject(ctx context.Context, diags *diag
 		Code: data.Code.ValueString(),
 	}
 
-	if !data.SortOrder.IsNull() {
+	if !(data.SortOrder.IsNull() || data.SortOrder.IsUnknown()) {
 		a.SortOrder = int(data.SortOrder.ValueInt64())
 	}
 
-	if !data.Labels.IsNull() {
+	if !(data.Labels.IsNull() || data.Labels.IsUnknown()) {
 		elements := make(map[string]types.String, len(data.Labels.Elements()))
 		diags.Append(data.Labels.ElementsAs(ctx, &elements, false)...)
 		labels := make(map[string]string)
@@ -247,7 +247,7 @@ func (r *AttributeGroupResource) mapToApiObject(ctx context.Context, diags *diag
 func (r *AttributeGroupResource) mapToTfObject(respDiags *diag.Diagnostics, data *AttributeGroupResourceModel, attrData *akeneox.AttributeGroup) {
 	data.Code = types.StringValue(attrData.Code)
 
-	if len(attrData.Labels) > 0 {
+	if attrData.Labels != nil {
 		elements := make(map[string]attr.Value, len(attrData.Labels))
 
 		for k, v := range attrData.Labels {

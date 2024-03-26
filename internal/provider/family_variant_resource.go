@@ -253,7 +253,7 @@ func (r *FamilyVariantResource) mapToApiObject(ctx context.Context, diags *diag.
 		Code: data.Code.ValueString(),
 	}
 
-	if !data.Labels.IsNull() {
+	if !(data.Labels.IsNull() || data.Labels.IsUnknown()) {
 		elements := make(map[string]types.String, len(data.Labels.Elements()))
 		diags.Append(data.Labels.ElementsAs(ctx, &elements, false)...)
 		labels := make(map[string]string)
@@ -263,7 +263,7 @@ func (r *FamilyVariantResource) mapToApiObject(ctx context.Context, diags *diag.
 		a.Lables = labels
 	}
 
-	if len(data.VariantAttributeSets) > 0 {
+	if !(data.Labels.IsNull() || data.Labels.IsUnknown()) {
 		sets := make([]goakeneo.VariantAttributeSet, len(data.VariantAttributeSets))
 		for i, set := range data.VariantAttributeSets {
 			s := goakeneo.VariantAttributeSet{

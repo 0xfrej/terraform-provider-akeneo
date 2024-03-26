@@ -118,7 +118,7 @@ func (r *AttributeOptionResource) Create(ctx context.Context, req resource.Creat
 		return
 	}
 
-	_, err := r.client.CreateAttributeOption(*apiData)
+	err := r.client.CreateAttributeOption(*apiData)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error while creating an attribute option",
@@ -230,11 +230,12 @@ func (r *AttributeOptionResource) mapToApiObject(ctx context.Context, diags *dia
 		Attribute: data.Attribute.ValueString(),
 	}
 
-	if !data.SortOrder.IsNull() {
-		a.SortOrder = int(data.SortOrder.ValueInt64())
+	if !(data.SortOrder.IsNull() || data.SortOrder.IsUnknown()) {
+		v := int(data.SortOrder.ValueInt64())
+		a.SortOrder = &v
 	}
 
-	if !data.Labels.IsNull() {
+	if !(data.Labels.IsNull() || data.Labels.IsUnknown()) {
 		elements := make(map[string]types.String, len(data.Labels.Elements()))
 		diags.Append(data.Labels.ElementsAs(ctx, &elements, false)...)
 		labels := make(map[string]string)
@@ -255,7 +256,7 @@ func (r *AttributeOptionResource) mapToTfObject(respDiags *diag.Diagnostics, dat
 	data.Code = types.StringValue(attrData.Code)
 	data.Attribute = types.StringValue(attrData.Attribute)
 
-	if len(attrData.Labels) > 0 {
+	if attrData.Labels != nil {
 		elements := make(map[string]attr.Value, len(attrData.Labels))
 
 		for k, v := range attrData.Labels {
@@ -269,5 +270,7 @@ func (r *AttributeOptionResource) mapToTfObject(respDiags *diag.Diagnostics, dat
 		data.Labels = mapVal
 	}
 
-	data.SortOrder = types.Int64Value(int64(attrData.SortOrder))
+	if attrData.SortOrder != nil {
+		data.SortOrder = types.Int64Value(int64(*attrData.SortOrder))
+	}
 }

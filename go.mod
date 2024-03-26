@@ -24,7 +24,7 @@ require (
 	github.com/cloudflare/circl v1.3.7 // indirect
 	github.com/fatih/color v1.16.0 // indirect
 	github.com/go-resty/resty/v2 v2.11.0 // indirect
-	github.com/golang/protobuf v1.5.3 // indirect
+	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
@@ -67,9 +67,9 @@ require (
 	golang.org/x/net v0.22.0 // indirect
 	golang.org/x/sys v0.18.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20240304212257-790db918fca8 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20240308144416-29370a3891b7 // indirect
 	google.golang.org/grpc v1.62.1 // indirect
 	google.golang.org/protobuf v1.33.0 // indirect
 )
 
-replace github.com/ezifyio/go-akeneo v1.0.28 => github.com/0xfrej/go-akeneo v0.0.0-20240304223002-d7b00cb60b89
+replace github.com/ezifyio/go-akeneo v1.0.28 => github.com/0xfrej/go-akeneo v0.0.0-20240310164427-b6557f49a6ad
