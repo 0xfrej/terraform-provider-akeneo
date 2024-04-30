@@ -51,7 +51,7 @@ func (i isPimAttributeTypeValidator) ValidateString(ctx context.Context, request
 		return
 	}
 
-	val := request.ConfigValue.String()
+	val := request.ConfigValue.ValueString()
 	for _, t := range i.getTypes() {
 		if val == t {
 			return

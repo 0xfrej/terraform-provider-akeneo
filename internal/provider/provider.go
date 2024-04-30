@@ -39,8 +39,6 @@ type DataSourceData struct {
 
 type ResourceData struct {
 	Client *goakeneo.Client
-	//ExtraAttributeTypes *[]string
-	//AvaialableLocales   []string
 }
 
 func (p *AkeneoProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
@@ -121,8 +119,6 @@ func (p *AkeneoProvider) Configure(ctx context.Context, req provider.ConfigureRe
 		goakeneo.WithBaseURL(fmt.Sprintf("%s://%s", proto, data.Host.ValueString())),
 	}
 
-	// TODO: implement rate limit
-	// opts = append(opts, goakeneo.WithRateLimit(10, 1*time.Second))
 	client, err := goakeneo.NewClient(connector, opts...)
 	if err != nil {
 		resp.Diagnostics.AddError(
@@ -135,41 +131,11 @@ func (p *AkeneoProvider) Configure(ctx context.Context, req provider.ConfigureRe
 	}
 	//TODO: add akeneo version validation - support 6, 7
 
-	//var extraAttrs *[]string
-	//if !data.ExtraAttributeTypes.IsNull() {
-	//	elements := make([]types.String, 0, len(data.ExtraAttributeTypes.Elements()))
-	//	resp.Diagnostics.Append(data.ExtraAttributeTypes.ElementsAs(ctx, &elements, false)...)
-	//	res := make([]string, len(elements))
-	//	for i, ext := range elements {
-	//		res[i] = ext.ValueString()
-	//	}
-	//	extraAttrs = &res
-	//}
-
-	// todo: list all pages
-	//locales, _, err := client.Locale.ListWithPagination(nil)
-	//if err != nil {
-	//	resp.Diagnostics.AddError(
-	//		"Unable to retrieve available locales",
-	//		"An unexpected error occurred when retrieving the available locales from Akeneo. "+
-	//			"If the error is not clear, please contact the provider developers.\n\n"+
-	//			"Akeneo API Error: "+err.Error(),
-	//	)
-	//	return
-	//}
-
-	//availableLocales := make([]string, len(locales))
-	//for i, locale := range locales {
-	//	availableLocales[i] = locale.Code
-	//}
-
 	resp.DataSourceData = &DataSourceData{
 		Client: client,
 	}
 	resp.ResourceData = &ResourceData{
 		Client: client,
-		//ExtraAttributeTypes: extraAttrs,
-		//AvaialableLocales:   availableLocales,
 	}
 }
 
@@ -180,6 +146,7 @@ func (p *AkeneoProvider) Resources(ctx context.Context) []func() resource.Resour
 		NewAttributeGroupResource,
 		NewFamilyResource,
 		NewFamilyVariantResource,
+		NewMeasurementFamilyResource,
 	}
 }
 

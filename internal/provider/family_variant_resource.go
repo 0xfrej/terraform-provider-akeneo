@@ -260,40 +260,38 @@ func (r *FamilyVariantResource) mapToApiObject(ctx context.Context, diags *diag.
 		for locale, label := range elements {
 			labels[locale] = label.ValueString()
 		}
-		a.Lables = labels
+		a.Labels = labels
 	}
 
-	if !(data.Labels.IsNull() || data.Labels.IsUnknown()) {
-		sets := make([]goakeneo.VariantAttributeSet, len(data.VariantAttributeSets))
-		for i, set := range data.VariantAttributeSets {
-			s := goakeneo.VariantAttributeSet{
-				Level: int(set.Level.ValueInt64()),
-			}
-
-			if !set.Axes.IsNull() {
-				elements := make([]types.String, len(set.Axes.Elements()))
-				diags.Append(set.Axes.ElementsAs(ctx, &elements, false)...)
-				axes := make([]string, len(elements))
-				for j, axis := range elements {
-					axes[j] = axis.ValueString()
-				}
-				s.Axes = axes
-			}
-
-			if !set.Attributes.IsNull() {
-				elements := make([]types.String, len(set.Attributes.Elements()))
-				diags.Append(set.Attributes.ElementsAs(ctx, &elements, false)...)
-				attributes := make([]string, len(elements))
-				for j, a := range elements {
-					attributes[j] = a.ValueString()
-				}
-				s.Attributes = attributes
-			}
-
-			sets[i] = s
+	sets := make([]goakeneo.VariantAttributeSet, len(data.VariantAttributeSets))
+	for i, set := range data.VariantAttributeSets {
+		s := goakeneo.VariantAttributeSet{
+			Level: int(set.Level.ValueInt64()),
 		}
-		a.VariantAttributeSets = sets
+
+		if !set.Axes.IsNull() {
+			elements := make([]types.String, len(set.Axes.Elements()))
+			diags.Append(set.Axes.ElementsAs(ctx, &elements, false)...)
+			axes := make([]string, len(elements))
+			for j, axis := range elements {
+				axes[j] = axis.ValueString()
+			}
+			s.Axes = axes
+		}
+
+		if !set.Attributes.IsNull() {
+			elements := make([]types.String, len(set.Attributes.Elements()))
+			diags.Append(set.Attributes.ElementsAs(ctx, &elements, false)...)
+			attributes := make([]string, len(elements))
+			for j, a := range elements {
+				attributes[j] = a.ValueString()
+			}
+			s.Attributes = attributes
+		}
+
+		sets[i] = s
 	}
+	a.VariantAttributeSets = sets
 
 	if diags.HasError() {
 		return nil
@@ -306,10 +304,10 @@ func (r *FamilyVariantResource) mapToTfObject(respDiags *diag.Diagnostics, data 
 	// todo map only non empties
 	data.Code = types.StringValue(apiData.Code)
 
-	if len(apiData.Lables) > 0 {
-		elements := make(map[string]attr.Value, len(apiData.Lables))
+	if len(apiData.Labels) > 0 {
+		elements := make(map[string]attr.Value, len(apiData.Labels))
 
-		for k, v := range apiData.Lables {
+		for k, v := range apiData.Labels {
 			elements[k] = types.StringValue(v)
 		}
 
