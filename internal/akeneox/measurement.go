@@ -9,14 +9,12 @@ const (
 )
 
 type MeasurementFamilyService struct {
-	goakeneo.FamilyService
 	client *goakeneo.Client
 }
 
 func NewMeasurementFamilyClient(client *goakeneo.Client) *MeasurementFamilyService {
 	return &MeasurementFamilyService{
-		FamilyService: client.Family,
-		client:        client,
+		client: client,
 	}
 }
 
@@ -35,7 +33,8 @@ func (a *MeasurementFamilyService) GetMeasurementFamily(code string) (*Measureme
 
 	for _, r := range *response {
 		if r.Code == code {
-			data = &r
+			selected := r
+			data = &selected
 			break
 		}
 	}

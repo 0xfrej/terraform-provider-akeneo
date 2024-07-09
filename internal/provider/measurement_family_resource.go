@@ -32,7 +32,7 @@ type MeasurementFamilyResource struct {
 	client *akeneox.MeasurementFamilyService
 }
 
-//TODO: use map for units just as the api does because akeneo returns objects in unpredictable order and tf alwasy thinks there is a change
+//TODO: use map for units just as the api does because akeneo returns objects in unpredictable order and tf always thinks there is a change
 
 type MeasurementFamilyResourceUnitConversionModel struct {
 	Operator types.String `tfsdk:"operator"`

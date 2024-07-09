@@ -55,7 +55,7 @@ else ifeq ($(UNAME_M),arm64)
 ARCH:=arm64
 endif
 
-.PHONY: build info fmt vet test clean install acctest local-dev-install
+.PHONY: build info fmt vet test clean install acctest local-dev-install docs
 
 all: build
 
@@ -63,7 +63,7 @@ info:
 	@echo "Global info"
 	@echo "$(KERNEL)"
 	@echo "$(ARCH)"
-	
+
 fmt:
 	@echo " -> checking code style"
 	@! gofmt -d $(shell find . -path ./vendor -prune -o -name '*.go' -print) | grep '^'
@@ -93,3 +93,6 @@ local: build install
 clean:
 #	@git clean -f -d
 	rm -rf bin
+
+docs:
+	tfplugindocs generate --rendered-provider-name

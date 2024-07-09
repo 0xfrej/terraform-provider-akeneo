@@ -2,7 +2,7 @@ package akeneox
 
 import goakeneo "github.com/ezifyio/go-akeneo"
 
-// AttributeGroup is the struct for an akeneo attribute group
+// AttributeGroup is the struct for an akeneo attribute group.
 type AttributeGroup struct {
 	//Links      *goakeneo.Links   `json:"_links,omitempty" mapstructure:"_links"`
 	Code       string            `json:"code,omitempty" mapstructure:"code"`
