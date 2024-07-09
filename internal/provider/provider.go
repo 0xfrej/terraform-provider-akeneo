@@ -3,6 +3,7 @@ package provider
 import (
 	"context"
 	"fmt"
+
 	goakeneo "github.com/ezifyio/go-akeneo"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
@@ -147,6 +148,7 @@ func (p *AkeneoProvider) Resources(ctx context.Context) []func() resource.Resour
 		NewFamilyResource,
 		NewFamilyVariantResource,
 		NewMeasurementFamilyResource,
+		NewChannelResource,
 	}
 }
 
