@@ -95,4 +95,4 @@ clean:
 	rm -rf bin
 
 docs:
-	tfplugindocs generate --rendered-provider-name
+	go generate
