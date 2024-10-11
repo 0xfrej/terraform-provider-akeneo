@@ -11,6 +11,7 @@ At the moment Akeneo does not support deletion of most of these types, so does t
 
 - Measurement Family
 - Channel
+- Category
 - Family
 - Family Variant
 - Attribute
