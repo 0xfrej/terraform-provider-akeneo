@@ -36,3 +36,10 @@ type MeasurementFamilyPatchResponse struct {
 	Message    string                     `json:"message,omitempty"`
 	Errors     []goakeneo.ValidationError `json:"errors,omitempty"`
 }
+
+type AssociationType struct {
+	Code         string            `json:"code,omitempty" mapstructure:"code"`
+	Labels       map[string]string `json:"labels,omitempty" mapstructure:"labels"`
+	IsQuantified *bool             `json:"is_quantified,omitempty" mapstructure:"is_quantified"`
+	IsTwoWay     *bool             `json:"is_two_way,omitempty" mapstructure:"is_two_way"`
+}
