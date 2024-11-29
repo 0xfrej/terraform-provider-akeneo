@@ -150,6 +150,7 @@ func (p *AkeneoProvider) Resources(ctx context.Context) []func() resource.Resour
 		NewMeasurementFamilyResource,
 		NewChannelResource,
 		NewCategoryResource,
+		NewAssociationTypeResource,
 	}
 }
 
