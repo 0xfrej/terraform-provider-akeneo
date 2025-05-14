@@ -1,6 +1,6 @@
 module github.com/0xfrej/terraform-provider-akeneo
 
-go 1.22.7
+go 1.23.0
 
 toolchain go1.23.2
 
@@ -8,7 +8,7 @@ require (
 	github.com/ezifyio/go-akeneo v1.0.28
 	github.com/hashicorp/terraform-plugin-docs v0.20.1
 	github.com/hashicorp/terraform-plugin-framework v1.14.1
-	github.com/hashicorp/terraform-plugin-framework-validators v0.16.0
+	github.com/hashicorp/terraform-plugin-framework-validators v0.18.0
 )
 
 require (
