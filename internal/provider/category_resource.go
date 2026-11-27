@@ -48,8 +48,9 @@ func (r *CategoryResource) Schema(ctx context.Context, req resource.SchemaReques
 
 		Attributes: map[string]schema.Attribute{
 			"code": schema.StringAttribute{
-				Description: "Category code",
-				Required:    true,
+				Description:   "Category code. Changing this forces a new resource to be created.",
+				Required:      true,
+				PlanModifiers: immutableIdentifier(),
 			},
 			"parent": schema.StringAttribute{
 				Description: "Category parent",

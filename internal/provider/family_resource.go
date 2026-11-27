@@ -50,8 +50,9 @@ func (r *FamilyResource) Schema(ctx context.Context, req resource.SchemaRequest,
 
 		Attributes: map[string]schema.Attribute{
 			"code": schema.StringAttribute{
-				Description: "Family code",
-				Required:    true,
+				Description:   "Family code. Changing this forces a new resource to be created.",
+				Required:      true,
+				PlanModifiers: immutableIdentifier(),
 			},
 			"labels": schema.MapAttribute{
 				Description: "Label definition per locale",

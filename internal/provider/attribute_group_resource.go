@@ -47,8 +47,9 @@ func (r *AttributeGroupResource) Schema(ctx context.Context, req resource.Schema
 
 		Attributes: map[string]schema.Attribute{
 			"code": schema.StringAttribute{
-				Description: "Attribute group code",
-				Required:    true,
+				Description:   "Attribute group code. Changing this forces a new resource to be created.",
+				Required:      true,
+				PlanModifiers: immutableIdentifier(),
 			},
 			"sort_order": schema.Int64Attribute{
 				Description: "Order of the attribute group",

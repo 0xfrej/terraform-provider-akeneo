@@ -51,8 +51,9 @@ func (r *ChannelResource) Schema(ctx context.Context, req resource.SchemaRequest
 
 		Attributes: map[string]schema.Attribute{
 			"code": schema.StringAttribute{
-				Description: "Channel code",
-				Required:    true,
+				Description:   "Channel code. Changing this forces a new resource to be created.",
+				Required:      true,
+				PlanModifiers: immutableIdentifier(),
 			},
 			"labels": schema.MapAttribute{
 				Description: "Label definition per locale",

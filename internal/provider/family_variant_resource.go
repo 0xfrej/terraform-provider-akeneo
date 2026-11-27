@@ -55,12 +55,14 @@ func (r *FamilyVariantResource) Schema(ctx context.Context, req resource.SchemaR
 
 		Attributes: map[string]schema.Attribute{
 			"family_code": schema.StringAttribute{
-				Description: "Family code to which this variant belongs",
-				Required:    true,
+				Description:   "Family code to which this variant belongs. Changing this forces a new resource to be created.",
+				Required:      true,
+				PlanModifiers: immutableIdentifier(),
 			},
 			"code": schema.StringAttribute{
-				Description: "Family variant code",
-				Required:    true,
+				Description:   "Family variant code. Changing this forces a new resource to be created.",
+				Required:      true,
+				PlanModifiers: immutableIdentifier(),
 			},
 			"labels": schema.MapAttribute{
 				Description: "Label definition per locale",

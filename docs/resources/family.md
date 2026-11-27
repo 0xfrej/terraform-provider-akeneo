@@ -17,7 +17,7 @@ Akeneo family resource
 
 ### Required
 
-- `code` (String) Family code
+- `code` (String) Family code. Changing this forces a new resource to be created.
 
 ### Optional
 

@@ -77,8 +77,9 @@ func (r *AttributeResource) Schema(ctx context.Context, req resource.SchemaReque
 
 		Attributes: map[string]schema.Attribute{
 			"code": schema.StringAttribute{
-				Description: "Attribute code",
-				Required:    true,
+				Description:   "Attribute code. Changing this forces a new resource to be created.",
+				Required:      true,
+				PlanModifiers: immutableIdentifier(),
 			},
 			"type": schema.StringAttribute{
 				Description: "Attribute type - see akeneo available akeneo types in the documentation. Example: pim_catalog_file",

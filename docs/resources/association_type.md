@@ -17,7 +17,7 @@ Akeneo association type resource
 
 ### Required
 
-- `code` (String) Association type code
+- `code` (String) Association type code. Changing this forces a new resource to be created.
 
 ### Optional
 

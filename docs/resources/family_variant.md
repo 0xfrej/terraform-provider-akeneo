@@ -17,8 +17,8 @@ Akeneo family variant resource
 
 ### Required
 
-- `code` (String) Family variant code
-- `family_code` (String) Family code to which this variant belongs
+- `code` (String) Family variant code. Changing this forces a new resource to be created.
+- `family_code` (String) Family code to which this variant belongs. Changing this forces a new resource to be created.
 
 ### Optional
 
