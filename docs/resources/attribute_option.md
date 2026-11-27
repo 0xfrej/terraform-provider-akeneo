@@ -17,8 +17,8 @@ Akeneo attribute option resource
 
 ### Required
 
-- `attribute` (String) Parent attribute code
-- `code` (String) Attribute option code
+- `attribute` (String) Parent attribute code. Changing this forces a new resource to be created.
+- `code` (String) Attribute option code. Changing this forces a new resource to be created.
 
 ### Optional
 

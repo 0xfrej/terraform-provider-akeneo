@@ -17,7 +17,7 @@ Akeneo attribute group resource
 
 ### Required
 
-- `code` (String) Attribute group code
+- `code` (String) Attribute group code. Changing this forces a new resource to be created.
 
 ### Optional
 

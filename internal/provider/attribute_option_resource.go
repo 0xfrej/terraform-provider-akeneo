@@ -49,12 +49,14 @@ func (r *AttributeOptionResource) Schema(ctx context.Context, req resource.Schem
 
 		Attributes: map[string]schema.Attribute{
 			"code": schema.StringAttribute{
-				Description: "Attribute option code",
-				Required:    true,
+				Description:   "Attribute option code. Changing this forces a new resource to be created.",
+				Required:      true,
+				PlanModifiers: immutableIdentifier(),
 			},
 			"attribute": schema.StringAttribute{
-				Description: "Parent attribute code",
-				Required:    true,
+				Description:   "Parent attribute code. Changing this forces a new resource to be created.",
+				Required:      true,
+				PlanModifiers: immutableIdentifier(),
 			},
 			"sort_order": schema.Int64Attribute{
 				Description: "Order of the attribute option",

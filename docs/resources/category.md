@@ -17,7 +17,7 @@ Akeneo category resource
 
 ### Required
 
-- `code` (String) Category code
+- `code` (String) Category code. Changing this forces a new resource to be created.
 
 ### Optional
 

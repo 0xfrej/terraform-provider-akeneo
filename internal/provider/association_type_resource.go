@@ -48,8 +48,9 @@ func (r *AssociationTypeResource) Schema(ctx context.Context, req resource.Schem
 
 		Attributes: map[string]schema.Attribute{
 			"code": schema.StringAttribute{
-				Description: "Association type code",
-				Required:    true,
+				Description:   "Association type code. Changing this forces a new resource to be created.",
+				Required:      true,
+				PlanModifiers: immutableIdentifier(),
 			},
 			"labels": schema.MapAttribute{
 				Description: "Label definition per locale",

@@ -64,8 +64,9 @@ func (r *MeasurementFamilyResource) Schema(ctx context.Context, req resource.Sch
 
 		Attributes: map[string]schema.Attribute{
 			"code": schema.StringAttribute{
-				Description: "Measurement family code (preferred uppercase values to follow Akeneo's convention)",
-				Required:    true,
+				Description:   "Measurement family code (preferred uppercase values to follow Akeneo's convention). Changing this forces a new resource to be created.",
+				Required:      true,
+				PlanModifiers: immutableIdentifier(),
 			},
 			"standard_unit_code": schema.StringAttribute{
 				Description: "Unit code used as the standard unit for this measurement family",

@@ -18,7 +18,7 @@ Akeneo channel resource
 ### Required
 
 - `category_tree` (String) Category tree assigned to the channel
-- `code` (String) Channel code
+- `code` (String) Channel code. Changing this forces a new resource to be created.
 - `currencies` (List of String) Currencies assigned to the channel
 - `locales` (List of String) Locales assigned to the channel
 

@@ -17,7 +17,7 @@ Akeneo attribute resource
 
 ### Required
 
-- `code` (String) Attribute code
+- `code` (String) Attribute code. Changing this forces a new resource to be created.
 - `group` (String) Attribute group
 - `type` (String) Attribute type - see akeneo available akeneo types in the documentation. Example: pim_catalog_file
 

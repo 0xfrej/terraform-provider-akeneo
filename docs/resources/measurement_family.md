@@ -17,7 +17,7 @@ Akeneo measurement family resource
 
 ### Required
 
-- `code` (String) Measurement family code (preferred uppercase values to follow Akeneo's convention)
+- `code` (String) Measurement family code (preferred uppercase values to follow Akeneo's convention). Changing this forces a new resource to be created.
 - `standard_unit_code` (String) Unit code used as the standard unit for this measurement family
 - `units` (Attributes List) Unit definitions (see [below for nested schema](#nestedatt--units))
 
