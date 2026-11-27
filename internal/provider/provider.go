@@ -3,16 +3,25 @@ package provider
 import (
 	"context"
 	"fmt"
+	"time"
 
 	goakeneo "github.com/ezifyio/go-akeneo"
+	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/provider"
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+)
+
+const (
+	defaultRequestsPerMinute int64 = 300
+	minRequestsPerMinute     int64 = 1
+	maxRequestsPerMinute     int64 = 6000
 )
 
 // Ensure AkeneoProvider satisfies various provider interfaces.
@@ -32,6 +41,7 @@ type AkeneoProviderModel struct {
 	ApiClientId         types.String `tfsdk:"api_client_id"`
 	ApiSecret           types.String `tfsdk:"api_client_secret"`
 	ExtraAttributeTypes types.List   `tfsdk:"extra_attribute_types"`
+	Rpm                 types.Int64  `tfsdk:"rpm"`
 }
 
 type DataSourceData struct {
@@ -89,8 +99,33 @@ func (p *AkeneoProvider) Schema(ctx context.Context, req provider.SchemaRequest,
 					),
 				},
 			},
+			"rpm": schema.Int64Attribute{
+				MarkdownDescription: "Maximum Akeneo HTTP requests per minute. Omitted uses 300. Must be from 1 to 6000.",
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(minRequestsPerMinute, maxRequestsPerMinute),
+				},
+			},
 		},
 	}
+}
+
+func requestRatePerMinute(rpm types.Int64) (int, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if rpm.IsNull() || rpm.IsUnknown() {
+		return int(defaultRequestsPerMinute), diags
+	}
+
+	value := rpm.ValueInt64()
+	if value < minRequestsPerMinute || value > maxRequestsPerMinute {
+		diags.AddError(
+			"Invalid provider rpm",
+			fmt.Sprintf("rpm must be between %d and %d, got %d.", minRequestsPerMinute, maxRequestsPerMinute, value),
+		)
+		return 0, diags
+	}
+
+	return int(value), diags
 }
 
 func (p *AkeneoProvider) Configure(ctx context.Context, req provider.ConfigureRequest, resp *provider.ConfigureResponse) {
@@ -98,6 +133,12 @@ func (p *AkeneoProvider) Configure(ctx context.Context, req provider.ConfigureRe
 
 	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
 
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	rpm, rpmDiags := requestRatePerMinute(data.Rpm)
+	resp.Diagnostics.Append(rpmDiags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -118,6 +159,7 @@ func (p *AkeneoProvider) Configure(ctx context.Context, req provider.ConfigureRe
 
 	opts := []goakeneo.Option{
 		goakeneo.WithBaseURL(fmt.Sprintf("%s://%s", proto, data.Host.ValueString())),
+		goakeneo.WithRateLimit(rpm, time.Minute),
 	}
 
 	client, err := goakeneo.NewClient(connector, opts...)

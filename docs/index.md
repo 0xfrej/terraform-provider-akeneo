@@ -26,4 +26,5 @@ description: |-
 ### Optional
 
 - `extra_attribute_types` (List of String) Extra attribute types that are not supported by default
+- `rpm` (Number) Maximum Akeneo HTTP requests per minute. Omitted uses 300. Must be from 1 to 6000.
 - `unsecure_api` (Boolean) Use http calls to the API
