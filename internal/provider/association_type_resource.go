@@ -273,6 +273,6 @@ func (r *AssociationTypeResource) mapToTfObject(respDiags *diag.Diagnostics, dat
 	}
 
 	if apiData.IsTwoWay != nil {
-		data.IsQuantified = types.BoolValue(*apiData.IsTwoWay)
+		data.IsTwoWay = types.BoolValue(*apiData.IsTwoWay)
 	}
 }
